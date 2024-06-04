@@ -1,1 +1,8 @@
 *.zip
+*.npy
+/a3/results/*
+*.pickle
+*.pkl 
+**/data**
+**/__pycache__**
+**MACOSX**
