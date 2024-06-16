@@ -350,17 +350,10 @@ class NMT(nn.Module):
         ###         https://pytorch.org/docs/stable/torch.html#torch.unsqueeze
         ###     Tensor Squeeze:
         ###         https://pytorch.org/docs/stable/torch.html#torch.squeeze
-        # print('Ybar_t shape :',Ybar_t.shape) # 5 6
         dec_state = self.decoder(Ybar_t, dec_state)
         dec_hidden, dec_cell = dec_state
         dec_hidden = dec_hidden.view(dec_hidden.shape[0],-1,1)
-        # print('dec_hidden: ',dec_hidden.shape) # 5 3
-        # print('dec_cell: ',dec_cell.shape) # 5 3 
-
-        e_t = torch.bmm(enc_hiddens_proj, dec_hidden).squeeze() # b seq
-        # print('e_t: ',e_t.shape) # b seq
-
-
+        e_t = torch.bmm(enc_hiddens_proj, dec_hidden).squeeze(dim = -1) # b seq
 
         ### END YOUR CODE
 
@@ -396,18 +389,13 @@ class NMT(nn.Module):
         ###     Tanh:
         ###         https://pytorch.org/docs/stable/torch.html#torch.tanh
 
-        alpha_t = torch.softmax(e_t, 1) # b seq
+        dec_hidden = dec_hidden.squeeze(-1) #b 2h
+        alpha_t = torch.softmax(e_t,-1) # b seq
         alpha_t = alpha_t.view(alpha_t.shape[0], 1, -1)
-        # print('alpha_t : ',alpha_t.shape)
-        a_t = torch.bmm(alpha_t, enc_hiddens).squeeze()
-        # print('a_t.shape: ', a_t.shape)
-        dec_hidden = dec_hidden.squeeze()
-        # print('dec_hidden: ',dec_hidden.shape) # 5 3
-        U_t = torch.cat((a_t , dec_hidden), dim = 1)
-        # print('U_t.shape: ',U_t.shape)
+        a_t = torch.bmm(alpha_t, enc_hiddens).squeeze(dim = 1)
+        U_t = torch.cat((a_t , dec_hidden), dim = -1)
         V_t = self.combined_output_projection(U_t)
         O_t = self.dropout(torch.tanh(V_t))
-        # print('a_t.shape: ', a_t.shape)
 
 
         ### END YOUR CODE

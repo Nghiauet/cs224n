@@ -10,3 +10,5 @@ a4/src.model
 a4/src.vocab
 a4/tgt.model
 a4/tgt.vocab
+a4/model.bin
+a4/model.bin.optim
