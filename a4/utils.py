@@ -32,10 +32,10 @@ def pad_sents(sents, pad_token):
         each sentences in the batch now has equal length.
     """
     sents_padded = []
-
     ### YOUR CODE HERE (~6 Lines)
-
-
+    max_len = max([len(x) for x in sents])
+    for i in range(len(sents)):
+            sents_padded.append(sents[i] + [pad_token]* (max_len - len(sents[i])))
 
     ### END YOUR CODE
 
@@ -103,4 +103,17 @@ def batch_iter(data, batch_size, shuffle=False):
         tgt_sents = [e[1] for e in examples]
 
         yield src_sents, tgt_sents
+# def test_pad_sents():
+#     """
+#     Unit test for pad_sents
+#     """
+#     print("Running test_pad_sents...")
+#     sents = [['Human:', 'What', 'do', 'we', 'want?'], ['Computer:', 'Natural', 'language', 'processing!'], ['Human:', 'When', 'do', 'we', 'want', 'it?'], ['Computer:', 'Now!']]
+#     pad_token = 'PAD'
+#     sents_padded = pad_sents(sents, pad_token)
+#     # assert sents_padded == [['Human:', 'What', 'do', 'we', 'want?', 'PAD', 'PAD'], ['Computer:', 'Natural', 'language', 'processing!', 'PAD', 'PAD'], ['Human:', 'When', 'do', 'we', 'want', 'it?', 'PAD'], ['Computer:', 'Now!', 'PAD', 'PAD', 'PAD', 'PAD', 'PAD']], "sents_padded is incorrect: it should be [['Human:', 'What', 'do', 'we', 'want?', 'PAD', 'PAD'], ['Computer:', 'Natural', 'language', 'processing!', 'PAD', 'PAD'], ['Human:', 'When', 'do', 'we', 'want', 'it?', 'PAD'], ['Computer:', 'Now!', 'PAD', 'PAD', 'PAD', 'PAD', 'PAD']]"
+#     print("sents_padded : ",sents_padded)
+#     # print("Passed!")
 
+# if __name__ == '__main__':
+#     test_pad_sents()

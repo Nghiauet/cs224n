@@ -1,0 +1,15 @@
+Running Sanity Check for Question 1d: Encode
+--------------------------------------------------------------------------------
+last_hidden:  torch.Size([2, 5, 3])
+last_cell:  torch.Size([2, 5, 3])
+enc_hiddens torch.Size([5, 22, 6])
+last_hidden:  torch.Size([5, 6])
+last_cell:  torch.Size([5, 6])
+self.h_projection.weight:  torch.Size([3, 6])
+torch.Size([5, 3])
+enc_hiddens Sanity Checks Passed!
+dec_init_state[0] Sanity Checks Passed!
+dec_init_state[1] Sanity Checks Passed!
+--------------------------------------------------------------------------------
+All Sanity Checks Passed for Question 1d: Encode!
+--------------------------------------------------------------------------------
