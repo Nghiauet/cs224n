@@ -100,7 +100,7 @@ def compute_corpus_level_bleu_score(references: List[List[str]], hypotheses: Lis
     # remove the start and end tokens
     if references[0][0] == '<s>':
         references = [ref[1:-1] for ref in references]
-    
+
     # detokenize the subword pieces to get full sentences
     detokened_refs = [''.join(pieces).replace('▁', ' ') for pieces in references]
     detokened_hyps = [''.join(hyp.value).replace('▁', ' ') for hyp in hypotheses]
@@ -115,7 +115,7 @@ def train(args: Dict):
     """ Train the NMT Model.
     @param args (Dict): args from cmd line
     """
-    train_data_src = read_corpus(args['--train-src'], source='src', vocab_size=21000)       
+    train_data_src = read_corpus(args['--train-src'], source='src', vocab_size=21000)
     train_data_tgt = read_corpus(args['--train-tgt'], source='tgt', vocab_size=8000)
 
     dev_data_src = read_corpus(args['--dev-src'], source='src', vocab_size=3000)
@@ -132,7 +132,7 @@ def train(args: Dict):
 
     vocab = Vocab.load(args['--vocab'])
 
-    # model = NMT(embed_size=int(args['--embed-size']),                                 
+    # model = NMT(embed_size=int(args['--embed-size']),
     #             hidden_size=int(args['--hidden-size']),
     #             dropout_rate=float(args['--dropout']),
     #             vocab=vocab)
@@ -141,7 +141,7 @@ def train(args: Dict):
                 hidden_size=1024,
                 dropout_rate=float(args['--dropout']),
                 vocab=vocab)
-    
+
 
     model.train()
 
@@ -154,8 +154,8 @@ def train(args: Dict):
     vocab_mask = torch.ones(len(vocab.tgt))
     vocab_mask[vocab.tgt['<pad>']] = 0
 
-    # device = torch.device("cuda:0" if args['--cuda'] else "cpu")
-    device = 'cuda'
+    device = torch.device("cuda:0" if args['--cuda'] else "cpu")
+    # device = 'cuda'
     print('use device: %s' % device, file=sys.stderr)
 
     model = model.to(device)
@@ -295,7 +295,7 @@ def decode(args: Dict[str, str]):
         model = model.to(torch.device("cuda:0"))
 
     hypotheses = beam_search(model, test_data_src,
-                            #  beam_size=int(args['--beam-size']),                      
+                            #  beam_size=int(args['--beam-size']),
                              beam_size=10,
                              max_decoding_time_step=int(args['--max-decoding-time-step']))
 
