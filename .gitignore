@@ -14,3 +14,4 @@ a4/model.bin
 a4/model.bin.optim
 *.params
 *.predictions
+*.csv
